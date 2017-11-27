@@ -1,22 +1,22 @@
 package database.DAO;
 
-import database.connection.MakeConnection;
-import database.connection.MakeConnectionImpl;
+import database.connection.IConnection;
+import database.connection.IConnectionImpl;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Util {
-    private MakeConnection makeConnection;
+    private IConnection iConnection;
 
     public Util() {
-        makeConnection = new MakeConnectionImpl();
+        iConnection = new IConnectionImpl();
     }
 
     public void makeQuery(String query) {
-        if (makeConnection.isConnected()) {
-            try (Connection connection = makeConnection.getConnection();
+        if (iConnection.isConnected()) {
+            try (Connection connection = iConnection.getConnection();
                  Statement statement = connection.createStatement()) {
                 statement.executeQuery(query);
             } catch (Exception e) {
@@ -26,9 +26,9 @@ public class Util {
     }
 
     public ResultSet getResultSet(String query) {
-        if (makeConnection.isConnected()) {
+        if (iConnection.isConnected()) {
             try {
-                Connection connection = makeConnection.getConnection();
+                Connection connection = iConnection.getConnection();
                 Statement statement = connection.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 return resultSet;

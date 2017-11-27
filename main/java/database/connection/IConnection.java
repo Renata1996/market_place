@@ -2,7 +2,7 @@ package database.connection;
 
 import java.sql.Connection;
 
-public interface MakeConnection {
+public interface IConnection {
 
     boolean isConnected();
 

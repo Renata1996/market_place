@@ -62,7 +62,7 @@ public class ItemDAOImplTest {
     @Test
     public void buyItem() throws Exception {
         createItems();
-        itemList.get(0).setBuying(true);
+        itemList.get(0).setSold(true);
         itemDAO = new ItemDAOImpl();
         itemDAO.buyItem(itemList.get(0));
         Assert.assertTrue(true);
@@ -80,7 +80,7 @@ public class ItemDAOImplTest {
         item.setStartPrice(100000);
         item.setStepRate(10);
         item.setTimeLeft(0);
-        item.setBuying(false);
+        item.setSold(false);
         item.setByNowFlag(false);
         itemList.add(item);
 

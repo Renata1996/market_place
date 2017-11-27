@@ -20,6 +20,14 @@ public class User {
         this.password = password;
     }
 
+    public User( String name, String address, String login, String password) {
+        this.userID = userID;
+        this.name = name;
+        this.address = address;
+        this.login = login;
+        this.password = password;
+    }
+
     public long getUserID() {
         return userID;
     }

@@ -63,9 +63,6 @@ public class UserDAOImpl implements UserDAO {
             ex.printStackTrace();
         }
 
-        if (user == null) {
-            throw new NullPointerException();
-        }
         return user;
     }
 

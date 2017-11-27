@@ -14,8 +14,8 @@ public class ItemDAOImpl implements ItemDAO {
     private static final String SELECT_BY_ID = "SELECT * FROM Item WHERE itemID=";
     private static final String SELECT_SUBSTR = "SELECT * FROM Item WHERE title LIKE '%";
     private static final String SELECT_ITEM_BY_SELLER = "SELECT * FROM Item INNER JOIN Users ON Users.userID = Item.sellerID WHERE Users.name LIKE '%";
-    private static final String INSERT_INTO_ITEMS = "INSERT INTO Item (title,description,sellerID,startPrice,stepRate,timeLeft,buyItNow,isBuying) VALUES('";
-    private static final String BUY_ITEM = "UPDATE Item SET isBuying =1 WHERE itemID=";
+    private static final String INSERT_INTO_ITEMS = "INSERT INTO Item (title,description,sellerID,startPrice,stepRate,timeLeft,buyItNow,isSold) VALUES('";
+    private static final String BUY_ITEM = "UPDATE Item SET isSold =1 WHERE itemID=";
     private static final String ITEM_ID = "itemID";
     private static final String TITLE = "title";
     private static final String SELLER_ID = "sellerID";
@@ -24,7 +24,7 @@ public class ItemDAOImpl implements ItemDAO {
     private static final String TIME_LEFT = "timeLeft";
     private static final String BUY_IT_NOW = "buyItNow";
     private static final String DESCRIPTION = "description";
-    private static final String IS_BUYING = "isBuying";
+    private static final String IS_BUYING = "isSold";
 
     private Util util = new Util();
 
@@ -102,7 +102,7 @@ public class ItemDAOImpl implements ItemDAO {
         StringBuilder query = new StringBuilder();
         query.append(INSERT_INTO_ITEMS).append(item.getTitle()).append("', '").append(item.getDescription()).append("', '").append(item.getSellerID())
                 .append("', '").append(item.getStartPrice()).append("', '").append(item.getStepRate()).append("', '").append(item.getTimeLeft())
-                .append("', '").append(!item.isByNowFlag() ? 0 : 1).append("', '").append(!item.isBuying() ? 0 : 1).append("')");
+                .append("', '").append(!item.isByNowFlag() ? 0 : 1).append("', '").append(!item.isSold() ? 0 : 1).append("')");
         util.makeQuery(query.toString());
     }
 
@@ -126,7 +126,7 @@ public class ItemDAOImpl implements ItemDAO {
             item.setStepRate(resultSet.getInt(STEP_RATE));
             item.setTimeLeft(resultSet.getInt(TIME_LEFT));
             item.setByNowFlag(resultSet.getInt(BUY_IT_NOW) != 0);
-            item.setBuying(resultSet.getInt(IS_BUYING) != 0);
+            item.setSold(resultSet.getInt(IS_BUYING) != 0);
         } catch (SQLException e) {
             System.out.println(e);
         }

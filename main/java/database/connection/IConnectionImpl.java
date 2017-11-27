@@ -7,13 +7,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class MakeConnectionImpl implements MakeConnection {
+public class IConnectionImpl implements IConnection {
 
     private static final String PROPERTIES_PATH = "src/main/resources/config.properties";
     private Properties properties;
     private Connection connection = null;
 
-    public MakeConnectionImpl() {
+    public IConnectionImpl() {
         try {
             properties = new Properties();
             properties.load(new FileInputStream(PROPERTIES_PATH));

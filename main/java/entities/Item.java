@@ -9,13 +9,13 @@ public class Item {
     private int stepRate;
     private long timeLeft;
     private boolean byNowFlag;
-    private boolean isBuying;
+    private boolean isSold;
 
     public Item() {
     }
 
     public Item(long itemID, String title, String description, long sellerID, int startPrice,
-                int stepRate, long timeLeft, boolean byNowFlag, boolean isBuying) {
+                int stepRate, long timeLeft, boolean byNowFlag, boolean isSold) {
         this.itemID = itemID;
         this.title = title;
         this.description = description;
@@ -24,7 +24,7 @@ public class Item {
         this.stepRate = stepRate;
         this.timeLeft = timeLeft;
         this.byNowFlag = byNowFlag;
-        this.isBuying = isBuying;
+        this.isSold = isSold;
     }
 
     public Item(long itemID) {
@@ -96,12 +96,12 @@ public class Item {
         this.sellerID = sellerID;
     }
 
-    public boolean isBuying() {
-        return isBuying;
+    public boolean isSold() {
+        return isSold;
     }
 
-    public void setBuying(boolean buying) {
-        isBuying = buying;
+    public void setSold(boolean sold) {
+        isSold = sold;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Item {
         if (stepRate != item.stepRate) return false;
         if (timeLeft != item.timeLeft) return false;
         if (byNowFlag != item.byNowFlag) return false;
-        if (isBuying != item.isBuying) return false;
+        if (isSold != item.isSold) return false;
         if (title != null ? !title.equals(item.title) : item.title != null) return false;
         return description != null ? description.equals(item.description) : item.description == null;
     }
@@ -132,7 +132,7 @@ public class Item {
         result = 31 * result + stepRate;
         result = 31 * result + (int) (timeLeft ^ (timeLeft >>> 32));
         result = 31 * result + (byNowFlag ? 1 : 0);
-        result = 31 * result + (isBuying ? 1 : 0);
+        result = 31 * result + (isSold ? 1 : 0);
         return result;
     }
 }
