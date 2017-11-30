@@ -17,5 +17,9 @@ public interface ItemDAO extends DAO {
 
     void buyItem(Item item);
 
+    List<Item> findItemByDescriptionSubstr(String nameSubstr);
 
+    void editItem(Item item);
+
+    void delete(String itemID);
 }

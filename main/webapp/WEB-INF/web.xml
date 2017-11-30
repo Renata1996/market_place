@@ -6,9 +6,8 @@
 <web-app  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>registration.jsp</welcome-file>
-    <welcome-file>showItems.jsp</welcome-file>
+    <welcome-file>showItems</welcome-file>
+    <welcome-file>index</welcome-file>
   </welcome-file-list>
 
   <servlet>
@@ -42,5 +41,24 @@
     <url-pattern>/showItems</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>servlets.MyItemsServlet</servlet-name>
+    <servlet-class>servlets.MyItemsServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>servlets.MyItemsServlet</servlet-name>
+    <url-pattern>/myItems</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>servlets.EditItemServlet</servlet-name>
+    <servlet-class>servlets.EditItemServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>servlets.EditItemServlet</servlet-name>
+    <url-pattern>/editItem</url-pattern>
+  </servlet-mapping>
 
 </web-app>

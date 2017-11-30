@@ -13,9 +13,11 @@ public class ItemDAOImpl implements ItemDAO {
     private static final String SELECT_ALL_ITEMS = "SELECT * FROM Item";
     private static final String SELECT_BY_ID = "SELECT * FROM Item WHERE itemID=";
     private static final String SELECT_SUBSTR = "SELECT * FROM Item WHERE title LIKE '%";
-    private static final String SELECT_ITEM_BY_SELLER = "SELECT * FROM Item INNER JOIN Users ON Users.userID = Item.sellerID WHERE Users.name LIKE '%";
-    private static final String INSERT_INTO_ITEMS = "INSERT INTO Item (title,description,sellerID,startPrice,stepRate,timeLeft,buyItNow,isSold) VALUES('";
-    private static final String BUY_ITEM = "UPDATE Item SET isSold =1 WHERE itemID=";
+    private static final String SELECT_SUBSTR_DESCRIPTION = "SELECT * FROM Item WHERE description LIKE '%";
+    private static final String SELECT_ITEM_BY_SELLER = "SELECT * FROM Item INNER JOIN Users ON Users.userID = Item.sellerID WHERE Users.login LIKE '%";
+    private static final String INSERT_INTO_ITEMS = "INSERT INTO Item (title,description,sellerID,startPrice,stepRate,timeLeft,buyItNow,isbuying) VALUES('";
+    private static final String BUY_ITEM = "UPDATE Item SET isSold = 1 WHERE itemID=";
+    private static final String UPDATE_ITEM_BY_ID = "UPDATE Item SET title ='";
     private static final String ITEM_ID = "itemID";
     private static final String TITLE = "title";
     private static final String SELLER_ID = "sellerID";
@@ -25,6 +27,7 @@ public class ItemDAOImpl implements ItemDAO {
     private static final String BUY_IT_NOW = "buyItNow";
     private static final String DESCRIPTION = "description";
     private static final String IS_BUYING = "isSold";
+    private static final String DELETE_ITEM = "DELETE FROM Item WHERE itemID=";
 
     private Util util = new Util();
 
@@ -56,6 +59,22 @@ public class ItemDAOImpl implements ItemDAO {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        return items;
+    }
+
+    public List<Item> findItemByDescriptionSubstr(String nameSubstr) {
+        List<Item> items = new ArrayList<>();
+
+        StringBuilder query = new StringBuilder();
+        query.append(SELECT_SUBSTR_DESCRIPTION).append(nameSubstr).append("%'");
+
+        try (ResultSet resultSet = util.getResultSet(query.toString())) {
+            while (resultSet.next()) {
+                items.add(makeItem(resultSet));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         return items;
     }
@@ -73,9 +92,6 @@ public class ItemDAOImpl implements ItemDAO {
             ex.printStackTrace();
         }
 
-        if (item == null) {
-            throw new NullPointerException();
-        }
         return item;
     }
 
@@ -113,6 +129,29 @@ public class ItemDAOImpl implements ItemDAO {
         util.makeQuery(query.toString());
     }
 
+    @Override
+    public void editItem(Item item) {
+        StringBuilder query = new StringBuilder();
+        if(!item.isByNowFlag()){
+            query.append(UPDATE_ITEM_BY_ID).append(item.getTitle()).append("', description = '").append(item.getDescription()).append("',startprice='")
+                    .append(item.getStartPrice()).append("', timeLeft='").append(item.getTimeLeft()).append("',stepRate='").append(item.getStepRate()).append("',buyitnow='")
+                    .append(item.isByNowFlag()?1:0).append("' WHERE itemId=").append(item.getItemID());
+        }
+       else{ query.append(UPDATE_ITEM_BY_ID).append(item.getTitle()).append("', description = '").append(item.getDescription()).append("',startprice='")
+                .append(item.getStartPrice()).append("',buyitnow='")
+                .append(item.isByNowFlag()?1:0).append("' WHERE itemId=").append(item.getItemID());
+        }
+        util.makeQuery(query.toString());
+
+    }
+
+    @Override
+    public void delete(String itemID) {
+        StringBuilder query = new StringBuilder();
+        query.append(DELETE_ITEM).append(itemID);
+        util.makeQuery(query.toString());
+    }
+
 
     private Item makeItem(ResultSet resultSet) {
         Item item = null;
@@ -124,7 +163,7 @@ public class ItemDAOImpl implements ItemDAO {
             item.setSellerID(resultSet.getInt(SELLER_ID));
             item.setStartPrice(resultSet.getInt(START_PRICE));
             item.setStepRate(resultSet.getInt(STEP_RATE));
-            item.setTimeLeft(resultSet.getInt(TIME_LEFT));
+            item.setTimeLeft(resultSet.getLong(TIME_LEFT));
             item.setByNowFlag(resultSet.getInt(BUY_IT_NOW) != 0);
             item.setSold(resultSet.getInt(IS_BUYING) != 0);
         } catch (SQLException e) {

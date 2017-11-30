@@ -37,8 +37,8 @@
                 </form>
             </div>
             <div class="panel-footer">
-                <p>You han't got an account <a href="../registration.jsp">Registration</a></p>
-                <p>Or enter as guest <a href="../showItems.jsp">I'm guest</a></p>
+                <p>You han't got an account <a href=/registration>Registration</a></p>
+                <p>Or enter as guest <a href="/">I'm guest</a></p>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
 
 
 <script src="https://unpkg.com/vue@2.2.6"></script>
-<script src="login.js"></script>
+<script src="js/login.js"></script>
 </body>
 
 </html>

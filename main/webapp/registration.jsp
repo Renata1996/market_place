@@ -47,14 +47,16 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label"> Re-enter password</label>
-                        <input type="password" name="password" class="form-control" id="reEnteredPassword"
+                        <input type="password" name="reEnteredPassword" class="form-control" id="reEnteredPassword"
                                placeholder="Re-enter password" v-model="reEnteredPassword" v-on:keyup="validatePassword">
                         <span class="help-block">{{messageReEnteredPassword}}</span>
                     </div>
                     <span class="help-block">{{error}}</span>
+
                     <%if (request.getAttribute("error") != null) {
                     out.println("<span class=help-block>" + request.getAttribute("error").toString() + "</span>");
                     }%>
+
                     <button type="submit" class="btn btn-primary">Registration</button>
                     <button type="btn btn-default" class="btn btn-default" v-on:click="reset">Reset</button>
                 </form>
@@ -66,7 +68,7 @@
 
 
 <script src="https://unpkg.com/vue@2.2.6"></script>
-<script src="registration.js"></script>
+<script src="js/registration.js"></script>
 </body>
 
 </html>

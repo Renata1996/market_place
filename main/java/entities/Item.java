@@ -27,6 +27,7 @@ public class Item {
         this.isSold = isSold;
     }
 
+
     public Item(long itemID) {
         this.itemID = itemID;
     }
